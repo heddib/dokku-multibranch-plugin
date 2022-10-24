@@ -9,8 +9,11 @@ refname=$3
 newrev=$2
 APP=${refname/*\//}.$reference_app
 
+# unset git_dir and quarantine for specific command
+SAFE_GITENV="env -u GIT_DIR -u GIT_QUARANTINE_PATH"
+
 if [[ ! -d "$DOKKU_ROOT/$APP" ]]; then
   REFERENCE_REPO="$DOKKU_ROOT/$reference_app"
-  git clone --bare --shared --reference "$REFERENCE_REPO" "$REFERENCE_REPO" "$DOKKU_ROOT/$APP" >/dev/null
+  $SAFE_GITENV git clone --bare --shared --reference "$REFERENCE_REPO" "$REFERENCE_REPO" "$DOKKU_ROOT/$APP" >/dev/null
 fi
 plugn trigger receive-app $APP $newrev
