@@ -2,6 +2,8 @@
 # Gives Dokku the ability to support multiple branches for a given service
 # Allowing you to have multiple staging environments on a per-branch basis
 
+set -eo pipefail; [[ $DOKKU_TRACE ]] && set -x
+
 reference_app=$1
 refname=$3
 newrev=$2
