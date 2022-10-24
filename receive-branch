@@ -7,9 +7,6 @@ refname=$3
 newrev=$2
 APP=${refname/*\//}.$reference_app
 
-# Log the event
-dokku_log_info1 "Git hook received" 
-
 if [[ ! -d "$DOKKU_ROOT/$APP" ]]; then
   REFERENCE_REPO="$DOKKU_ROOT/$reference_app"
   git clone --bare --shared --reference "$REFERENCE_REPO" "$REFERENCE_REPO" "$DOKKU_ROOT/$APP" >/dev/null
