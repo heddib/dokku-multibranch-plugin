@@ -16,4 +16,4 @@ if [[ ! -d "$DOKKU_ROOT/$APP" ]]; then
   REFERENCE_REPO="$DOKKU_ROOT/$reference_app"
   $SAFE_GITENV git clone --bare --shared --reference "$REFERENCE_REPO" "$REFERENCE_REPO" "$DOKKU_ROOT/$APP" >/dev/null
 fi
-plugn trigger receive-app $APP $newrev
+plugn trigger receive-app $reference_app $newrev
