@@ -1,4 +1,4 @@
 [plugin]
 description = "Plugin that allow to push multiple branch"
-version = "0.1.2"
+version = "1.0.0"
 [plugin.config]

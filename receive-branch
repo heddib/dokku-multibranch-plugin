@@ -11,9 +11,10 @@ APP=$reference_app
 
 # if app name doesn't contain "test"
 if [[ $APP != *"test"* ]]; then
+  dokku_l
   exit 0
 fi
 
-dokku git:set $APP deploy-branch $refname
+dokku git:set $APP deploy-branch ${refname/*\//}
 
 plugn trigger receive-app $APP $newrev
