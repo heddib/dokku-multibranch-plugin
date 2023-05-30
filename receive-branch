@@ -7,16 +7,13 @@ set -eo pipefail; [[ $DOKKU_TRACE ]] && set -x
 reference_app=$1
 refname=$3
 newrev=$2
-APP=${refname/*\//}.$reference_app
+APP=$reference_app
 
-# unset git_dir and quarantine for specific command
-SAFE_GITENV="env -u GIT_DIR -u GIT_QUARANTINE_PATH"
-
-if [[ ! -d "$DOKKU_ROOT/$APP" ]]; then
-  REFERENCE_REPO="$DOKKU_ROOT/$reference_app"
-  $SAFE_GITENV git clone --bare --shared --reference "$REFERENCE_REPO" "$REFERENCE_REPO" "$DOKKU_ROOT/$APP" >/dev/null
+# if app name doesn't contain "test"
+if [[ $APP != *"test"* ]]; then
+  exit 0
 fi
-plugn trigger receive-app $reference_app $newrev
 
-# Delete the dir 
-rm -rf "$DOKKU_ROOT/$APP"
+dokku git:set $APP deploy-branch $refname
+
+plugn trigger receive-app $APP $newrev
